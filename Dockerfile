@@ -7,14 +7,28 @@ RUN apt-get -qq update \
     && apt-get install -y --no-install-recommends -q \
         texlive \
         texlive-latex-extra \
+        texlive-lang-japanese \
         texlive-lang-cjk \
-        fonts-noto-cjk \
-        fonts-noto-cjk-extra \
         make \
         latexmk \
+        ghostscript \
+        evince \
         git \
         python3 \
-        python3-dev
+        python3-dev \
+        fonts-noto-cjk \
+        fonts-noto-cjk-extra
+# removing font packages automatically installed via poppler and texlive-lang-japanese
+RUN dpkg -r --force-depends \
+        fonts-arphic-ukai \
+        fonts-arphic-uming \
+        fonts-nanum \
+        fonts-japanese-gothic \
+        fonts-japanese-mincho \
+        fonts-ipaexfont-gothic \
+        fonts-ipaexfont-mincho \
+        fonts-ipafont-gothic \
+        fonts-ipafont-mincho 
 
 FROM base as python-setting
 RUN apt-get -qq update \
